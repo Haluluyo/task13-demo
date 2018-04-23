@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<title>news</title>
+<style>
+  .container{
+    width: 900px;
+    margin: 0 auto;
+  }
+</style>
+</head>
+<body>
+  <div class="container">
+    <ul class="news">
+      <li>博彩赔率挺中国夺回第二纽约时报：中国因对手服禁药而丢失的奖牌最多</li>
+      <li>最“出柜”奥运？同性之爱闪耀里约 </li> 
+      <li>跪拜谢与洪荒之力一样 都是真情流露</li>
+    </ul>
+    <button class="change">换一组</button>
+  </div>
+  
+<script>
+  
+  $('.change').addEventListener('click', function(){
+    var xhr = new XMLHttpRequest();
+    xhr.open('get', 'http://127.0.0.1:8080/getNews', true);
+    xhr.send();
+    xhr.onreadystatechange = function(){
+      if(xhr.readyState === 4 && xhr.status === 200){
+        appendHtml( JSON.parse(xhr.responseText) )
+      }
+    }
+    window.xhr = xhr
+  })
+  function appendHtml(news){
+    var html = '';
+    for( var i=0; i<news.length; i++){
+      html += '<li>' + news[i] + '</li>';
+    }
+    console.log(html);
+    $('.news').innerHTML = html;
+  }
+  function $(id){
+    return document.querySelector(id);
+  }
+</script>
+
+</html>
